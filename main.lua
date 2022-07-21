@@ -3,7 +3,7 @@ if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
   if pcall(require, "mobdebug") then require("mobdebug").start() end
 end
 
-vector2 = require("vector2")
+SVC = require("services")
 
 local Selects = {
   ["CirclePacking"] = require("CirclePacking"),
@@ -14,6 +14,8 @@ local currSelect = "SpaceColonization"
 
 function love.load()
   Selects[currSelect].load()
+
+  print(SVC.lib)
 end
 
 -- Increase the size of the rectangle every frame.
@@ -28,4 +30,7 @@ end
 
 function love.keyreleased(key)
   Selects[currSelect].keyreleased(key)
+end
+
+function love.errorhandler()
 end
