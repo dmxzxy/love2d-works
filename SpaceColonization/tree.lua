@@ -1,5 +1,5 @@
-local leaves = require("leaves")
-local branch = require("branch")
+local Leaves = require("leaves")
+local Branch = require("branch")
 
 local width, height = love.graphics.getDimensions()
 local Screen = {
@@ -11,30 +11,25 @@ local Screen = {
   end
 }
 
-local function createTree()
-  local branchLen = 15
+local function createTree(setting)
+  local branchLen = setting.branchGrowLength
   
   local branchs = {}
-  local root = branch.create(nil, {Screen.width/2, Screen.height}, {0, -1})
+  local root = Branch.create(nil, {Screen.width/2, Screen.height}, {0, -1})
   table.insert(branchs, root)
   
   local Tree = {
-    leafset = leaves.create(Screen.width/2, Screen.height/2-50, 300, 1000, 20, 100),
+    leafset = Leaves.create(Screen.width/2, Screen.height/2-50, 400, setting.leafCount, setting.leafEffectRadius, setting.leafKillRadius),
     branchs = branchs,
-    draw = function(self)
-      leaves.draw(self.leafset)
-      for _, b in ipairs(self.branchs) do
-        b:draw()
+
+    -- function
+    draw = function(self, debugdraw)
+      if debugdraw then
+        Leaves.draw(self.leafset)
       end
-    end,
-    
-    grow_branch = function(self)
+
       for _, b in ipairs(self.branchs) do
-        if b:hasAttractLeaf() then
-          local nextdir = b:getAverageDir()
-          local nextpos = { b.pos[1] + nextdir[1] * branchLen, b.pos[2] + nextdir[2] * branchLen }
-          table.insert(self.branchs, branch.create(b, nextpos, nextdir, branchLen))
-        end
+        b:draw(debugdraw)
       end
     end,
     
@@ -50,7 +45,20 @@ local function createTree()
         end
       end
       
-      leaves.removeClosed(self.leafset)
+      Leaves.removeClosed(self.leafset)
+      
+      -- grow branch
+      for _, b in ipairs(self.branchs) do
+        if b:hasAttractLeaf() then
+          local nextdir = b:getAverageDir()
+          local nextpos = { b.pos[1] + nextdir[1] * branchLen, b.pos[2] + nextdir[2] * branchLen }
+          table.insert(self.branchs, Branch.create(b, nextpos, nextdir, branchLen))
+        end
+      end
+    end,
+
+    toggleDebug = function(self)
+      self.debugdraw = not self.debugdraw
     end
   }
   return Tree  

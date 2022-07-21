@@ -3,27 +3,22 @@
 local function RandomPointWithinCircle(x, y, r)
   local _r = r * math.sqrt(math.random(0, 100)/100)
   local theta = math.random() * 2 * math.pi
-  _x = x + _r * math.cos(theta)
-  _y = y + _r * math.sin(theta)
+  local _x = x + _r * math.cos(theta)
+  local _y = y + _r * math.sin(theta)
   return {_x, _y}
-end
-  
-local width, height = love.graphics.getDimensions()
-local function RandomPoint(paddingx, paddingy)
-  return {math.random(paddingx, width-paddingx), math.random(paddingy, height-paddingy)}
 end
 
 local serialseed = 0
-local function createLeaf(pos)
+local function createLeaf(pos, effectRadius, killRadius)
   serialseed = serialseed + 1
   local leaf = {
     serial = serialseed,
     -- 位置
     pos = {pos[1], pos[2]},    
     -- 影响半径
-    effectRadius = 200,
+    effectRadius = effectRadius,
     -- 消亡半径
-    killRadius = 10,
+    killRadius = killRadius,
     -- 是否关闭
     reached = false,
     -- 绘制
@@ -78,12 +73,15 @@ local function createLeaves(centerx, centery, size, length, effectRadius, killRa
   size = math.max(100, size)
   effectRadius = effectRadius or 200
   killRadius = killRadius or 10
+  if killRadius > effectRadius then
+    print("killRadius bigger than effectRadius, make killRadius smaller")
+    killRadius = math.floor(effectRadius / 2)
+  end
   
   local leaves = {}
   for i = 1, length do
---    local point = RandomPointWithinCircle(centerx, centery, size)
-    local point = RandomPoint(200, 100)
-    leaves[i] = createLeaf(point)
+    local point = RandomPointWithinCircle(centerx, centery, size)
+    leaves[i] = createLeaf(point, effectRadius, killRadius)
   end
   
   return leaves

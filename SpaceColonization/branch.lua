@@ -8,7 +8,7 @@ local function createSegment(x,y,x1,y1)
       local owidth = love.graphics.getLineWidth()
       love.graphics.setLineWidth(width)
       love.graphics.setLineStyle("smooth")
-      love.graphics.line(self.beginPoint[1], self.beginPoint[2], unpack(self.endPoint))
+      love.graphics.line(self.beginPoint[1], self.beginPoint[2], self.endPoint[1], self.endPoint[2])
       love.graphics.setLineWidth(owidth)
     end
   }
@@ -26,21 +26,22 @@ local function createBranch(parent, pos, dir)
     attractLeafs = {},
     childcount = 0,
 
+    -- render
     segment = nil,
-    normal_dir = function(self)
-      local m = math.sqrt(self.dir[1] * self.dir[1], self.dir[2] * self.dir[2])
-      self.dir = {self.dir[1] / m, self.dir[2] / m}
-    end,
-    draw = function(self)
+
+    draw = function(self, debugdraw)
         if self.segment then
           local thickness = math.min(math.floor(self.childcount / 20), 12)
           self.segment:draw(thickness, 1)
         end
-        love.graphics.setColor(0, 1, 0, 0.3)
-        for _, leaf in ipairs(self.attractLeafs) do
-          love.graphics.line(self.pos[1], self.pos[2], leaf.pos[1], leaf.pos[2])
+        if debugdraw then
+          love.graphics.setColor(0, 1, 0, 0.3)
+          for _, leaf in ipairs(self.attractLeafs) do
+            love.graphics.line(self.pos[1], self.pos[2], leaf.pos[1], leaf.pos[2])
+          end
         end
     end,
+
     clearAttractLeafs = function(self)
       self.attractLeafs = {}
     end,
