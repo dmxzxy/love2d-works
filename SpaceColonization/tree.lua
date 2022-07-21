@@ -1,4 +1,3 @@
-
 local leaves = require("leaves")
 local branch = require("branch")
 
@@ -12,7 +11,7 @@ local Screen = {
   end
 }
 
-function createTree()
+local function createTree()
   local branchLen = 15
   
   local branchs = {}

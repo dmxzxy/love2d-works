@@ -38,12 +38,6 @@ function M.draw()
 end
 
 function M.keyreleased(key)
-  if key == "o" then
-    tree:grow()
-  end
-  if key == "p" then
-    tree:grow_branch()
-  end
 end
 
 return M

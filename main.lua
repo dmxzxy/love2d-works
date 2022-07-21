@@ -1,4 +1,7 @@
-if arg[#arg] == "-debug" then require("mobdebug").start() end
+if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
+  if pcall(require, "lldebugger") then require("lldebugger").start() end
+  if pcall(require, "mobdebug") then require("mobdebug").start() end
+end
 
 vector2 = require("vector2")
 
