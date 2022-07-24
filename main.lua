@@ -7,15 +7,14 @@ SVC = require("services")
 
 local Selects = {
   ["CirclePacking"] = require("CirclePacking"),
-  ["SpaceColonization"] = require("SpaceColonization")
+  ["SpaceColonization"] = require("SpaceColonization"),
+  ["UlamSpiral"] = require("UlamSpiral"),
 }
 
-local currSelect = "SpaceColonization"
+local currSelect = "UlamSpiral"
 
 function love.load()
   Selects[currSelect].load()
-
-  print(SVC.lib)
 end
 
 -- Increase the size of the rectangle every frame.

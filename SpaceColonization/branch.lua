@@ -45,6 +45,7 @@ local function createBranch(parent, pos, dir)
     clearAttractLeafs = function(self)
       self.attractLeafs = {}
     end,
+
     addAttractLeaf = function(self, leaf)
       table.insert(self.attractLeafs, leaf)
     end,
