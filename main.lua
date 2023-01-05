@@ -82,6 +82,6 @@ function love.mousereleased(x, y, button, istouch)
   (current.mousereleased or __NULL__)(x, y, button, istouch)
 end
 
-function love.errorhandler()
-  (current.errorhandler or __NULL__)()
-end
+-- function love.errorhandler()
+--   (current.errorhandler or __NULL__)()
+-- end

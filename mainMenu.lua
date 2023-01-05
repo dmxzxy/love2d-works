@@ -9,7 +9,10 @@ local RegisteModule = {
     "CirclePacking",
     "SpaceColonization",
     "UlamSpiral",
-    "GridTile"
+    "GridTile",
+    "TreeMap",
+    "HeatTransfer",
+    "GridLighting"
 }
   
 local menu = {
