@@ -6,7 +6,7 @@ if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
         require("mobdebug").start()
     end
 end
-
+io.stdout:setvbuf('no')
 SVC = require("services")
 
 local function __NULL__() end

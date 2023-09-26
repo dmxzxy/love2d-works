@@ -12,7 +12,8 @@ local RegisteModule = {
     "GridTile",
     "TreeMap",
     "HeatTransfer",
-    "GridLighting"
+    "GridLighting",
+    "Dijkstra",
 }
   
 local menu = {
